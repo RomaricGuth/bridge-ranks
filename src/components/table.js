@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import TablePage from "./tablePage";
+import Pagination from "./pagination";
 
 export default function Table({data}) {
     const fields = [
@@ -37,6 +38,9 @@ export default function Table({data}) {
     ])
 
     return (
-        <TablePage data={data.slice(rowsPerPage * (page - 1), rowsPerPage)} columns={displayedCols} />
+        <div>
+            <TablePage data={data.slice(rowsPerPage * (page - 1), rowsPerPage * page)} columns={displayedCols} />
+            <Pagination currentPage={page} totalPages={Math.ceil(data.length / rowsPerPage)} onPageChange={setPage} />
+        </div>
     )
 }
