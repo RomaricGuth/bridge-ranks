@@ -4,7 +4,6 @@ export default function MultiSelectDropdown({options, placeholder, selected, onS
     const _onSelect = (_option, index) => {
         const newSelected = {...selected};
         newSelected[index] = !selected[index];
-        console.log(newSelected);
         onSelectChange(newSelected);
     }
 

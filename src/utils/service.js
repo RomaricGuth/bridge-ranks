@@ -1,24 +1,19 @@
-/*
-export function getData() {
-    return new Promise(async (resolve, reject) => {
-        const data = await import('../../public/data/results_2022-2023.csv');
-        console.log(data);
-        resolve(data);
-    });
-}
-*/
+import 'server-only';
+import Papa from 'papaparse';
+import { readFileSync } from 'node:fs';
 
 export function getData() {
     return new Promise(async (resolve, reject) => {
-        const csv = require('csv-parser')
-        const fs = require('fs')
-        const results = [];
-
-        fs.createReadStream('public/data/results_2022-2023.csv')
-        .pipe(csv())
-        .on('data', (data) => results.push(data))
-        .on('end', () => {
-            resolve(results)
-        });
+        const csvData = readFileSync('public/data/results_2022-2023.csv', 'utf-8');
+        Papa.parse(csvData, {
+            header: true,
+            dynamicTyping: true, // keep numbers typed as number in resulting JSON
+            complete(results, _file) {
+                resolve(results.data);
+            },
+            error(error, _file) {
+                reject(error);
+            }
+        })
     });
 }
