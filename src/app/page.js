@@ -1,5 +1,5 @@
 import Table from '@/components/table'
-import { getData } from '@/utils/service'
+import { getData } from '@/utils/service/service'
 
 export default async function Home() {
   const data = await getData();

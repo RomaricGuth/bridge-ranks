@@ -1,15 +1,11 @@
 import Dropdown from "./dropdown";
 
-export default function MultiSelectDropdown({options, placeholder, selected, onSelectChange}) {
+export default function MultiSelectDropdown({selected, onSelectChange, ...props}) {
     const _onSelect = (_option, index) => {
         const newSelected = {...selected};
         newSelected[index] = !selected[index];
         onSelectChange(newSelected);
     }
-
-    const renderPlaceholder = () => (
-        <div>{placeholder}</div>
-    )
 
     const renderOption = (option, index) => (
         <div>
@@ -23,6 +19,6 @@ export default function MultiSelectDropdown({options, placeholder, selected, onS
     )
 
     return (
-        <Dropdown options={options} onSelect={_onSelect} renderPlaceholder={renderPlaceholder} renderOption={renderOption} closeOnSelect={false}/>
+        <Dropdown renderOption={renderOption} closeOnSelect={false} onSelect={_onSelect} {...props} />
     )
 }
